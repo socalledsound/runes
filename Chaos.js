@@ -1,5 +1,6 @@
 class Chaos {
-    constructor(x, y, size, snd){
+    constructor(x, y, size, idx){
+        this.idx = idx
         this.x = x
         this.y = y
         this.circleSize = size
@@ -12,7 +13,7 @@ class Chaos {
         this.dormantCol = [22, 220, 220, 120]
         this.activeCol = [220,0,120, 110]
         this.dormantCol = [110, 80, 110, 120]
-        this.snd = snd
+        // this.snd = snd
     }
 
     checkMouse(mx, my){
@@ -21,12 +22,20 @@ class Chaos {
             my > this.y - this.circleSize/2 && 
             my < this.y + this.circleSize/2){
                 this.active = true
-                if(!this.snd.isPlaying())
-                this.snd.play()
+                if(!soundBank[this.idx].isPlaying())
+                this.playSound()
             }else{
                 this.active = false
-                this.snd.pause()
+                this.pauseSound()
             }
+    }
+
+    pauseSound(){
+        soundBank[this.idx].pause()
+    }
+
+    playSound(){
+        soundBank[this.idx].play()
     }
 
     pointOnCircle = (r, angle) => {

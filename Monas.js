@@ -1,5 +1,6 @@
 class Monas {
-    constructor(x, y, w, h, snd){
+    constructor(x, y, w, h, idx){
+        this.idx = idx
         this.x = x
         this.y = y
         this.w = w
@@ -13,9 +14,9 @@ class Monas {
         this.dormantCol = [22, 220, 220, 120]
         this.dormantEyeCol = [0,0,0]
         this.dormantCol = [120, 80, 170, 120]
-        this.basicStrokeCol = 160
-        this.activeStrokeCol = 200
-        this.snd = snd
+        this.basicStrokeCol = [160, 160, 160]
+        this.activeStrokeCol = [200, 200, 200]
+        // this.snd = snd
     }
 
     checkMouse(mx, my){
@@ -24,12 +25,19 @@ class Monas {
             my > this.y - this.h/2 && 
             my < this.y + this.h/2){
                 this.active = true
-                if(!this.snd.isPlaying())
-                this.snd.play()
+            if(!soundBank[this.idx].isPlaying())
+                this.playSound()
             }else{
                 this.active = false
-                this.snd.stop()
+                this.pauseSound()
             }
+    }
+    pauseSound(){
+        soundBank[this.idx].pause()
+    }
+    
+    playSound(){
+        soundBank[this.idx].play()
     }
 
     horns = (x, y, r) => {
@@ -52,7 +60,7 @@ class Monas {
     
     body = (x, y, w, h) => {
         let sw = 6
-        this.active ? fill(this.activeStrokeCol) : fill(this.basicStrokeCol)
+        this.active ? stroke(this.activeStrokeCol) : stroke(this.basicStrokeCol)
         strokeWeight(sw)
         line(x, y + sw * 0.5, x, y + h * 1.5 - sw)
         line(x - w/6, y + h/2, x + w/6, y + h/2)

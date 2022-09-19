@@ -2,6 +2,6 @@
 
 some runes made with math and a little midnight gospel
 
-live demo:
-
+live:
+https://socalledsound.github.io/runes/
 

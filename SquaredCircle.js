@@ -1,5 +1,6 @@
 class SquaredCircle{
-    constructor(x, y, w, h, snd){
+    constructor(x, y, w, h, idx){
+        this.idx = idx
         this.padding = w/10
         this.x = x
         this.y = y
@@ -16,7 +17,7 @@ class SquaredCircle{
         this.activeTriangleCol= [220,0,120, 110]
         this.dormantCol = [22, 220, 220, 120]
         this.dormantCol = [120, 80, 170, 120]
-        this.snd = snd
+        // this.snd = snd
     }
     checkMouse(mx, my){
       if(mx > this.x - this.r &&
@@ -24,13 +25,20 @@ class SquaredCircle{
           my > this.y - this.r && 
           my < this.y + this.r){
             this.active = true
-            if(!this.snd.isPlaying())
-            this.snd.play()
+        if(!soundBank[this.idx].isPlaying())
+            this.playSound()
         }else{
             this.active = false
-            this.snd.stop()
+            this.pauseSound()
         }
   }
+  pauseSound(){
+    soundBank[this.idx].pause()
+}
+
+playSound(){
+  soundBank[this.idx].play()
+}
 
     outerCircle = (x, y, r) => {
         noFill()

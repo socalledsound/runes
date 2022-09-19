@@ -1,5 +1,6 @@
 class IcelandicRune {
-    constructor(x, y, size, snd){
+    constructor(x, y, size, idx){
+        this.idx = idx
         this.x = x
         this.y = y
         // size = 150
@@ -16,7 +17,7 @@ class IcelandicRune {
         this.activeCol = [220,0,210,220]
         this.activeCol = [220,0,120, 110]
         this.dormantCol = [150, 80, 170, 150]
-        this.snd = snd
+        // this.snd = snd
 
     }
 
@@ -26,13 +27,21 @@ class IcelandicRune {
           my > this.y - this.arcRadius && 
           my < this.y + this.arcRadius){
             this.active = true
-            if(!this.snd.isPlaying())
-            this.snd.play()
+            if(!soundBank[this.idx].isPlaying())
+            this.playSound()
         }else{
             this.active = false
-            this.snd.stop()
+            this.pauseSound()
         }
   }
+
+  pauseSound(){
+    soundBank[this.idx].pause()
+}
+
+playSound(){
+  soundBank[this.idx].play()
+}
 
     drawCenter(){
         this.active ? stroke(this.activeCol) : stroke(this.dormantCol)
